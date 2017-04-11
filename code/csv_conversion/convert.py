@@ -2,6 +2,7 @@
 Convert Yelp Academic Dataset from JSON to CSV
 Requires Pandas (https://pypi.python.org/pypi/pandas)
 By Paul Butler, No Rights Reserved
+source: https://gist.github.com/paulgb/5265767
 '''
 
 import json
