@@ -137,9 +137,17 @@ The Yelp dataset comes from the Yelp Dataset Challenge. This is an ongoing chall
 \includegraphics[width=0.75\textwidth, center]{b_rating_by_state}
 \end{figure}
 
+Figure 2, depicts a graph of longitude vs. latitude vs. review count for businesses. 
+
+\begin{figure}[!h]
+\includegraphics[width=0.75\textwidth, center]{3d_businesses_lat_long}
+\end{figure}
+
+In this instance the visualization makes it clear that reviews are more frequent in populated cities as we expect. However, it also shows visually the outliers. There are various businesses that have only a few reviews. In this context it is easier to identify outliers and also see that businesses concentrate in certain locations. Therefore we can reduce the dataset to only the cities that meet the threshold of businesses or total review counts. 
+
 \subsection{Users}
 
-\quad There are some very interesting features here. It essentially provides a window into users' status, connections, and interaction within the Yelp ecosystem. 
+\quad There are some very interesting features here. It essentially provides a window into users' status, connections, and interaction within the Yelp ecosystem. The figure below shows a plot of the user data. We see that the user density grows around 3.25-4.25 average rating with some traces of a bell curve regarding the number of reviews. The most significant yet hardest to process attribute is the 'friends' list. 
 
 \begin{figure}[!h]
 \includegraphics[width=0.45\textwidth, center]{u_reviews_vs_stars}
@@ -148,7 +156,7 @@ The Yelp dataset comes from the Yelp Dataset Challenge. This is an ongoing chall
 \quad
 \section{Next Steps}
 
-\quad It is still necessary to reduce dimensionality. We?ve currently been working on the whole dataset and simply ignoring all attributes that fall in the category ?other.? This is cumbersome and it will become increasingly detrimental as we use more advanced techniques like clustering. The most prioritized attribute is the attributes portion. This attribute has the most issues because it is a miscellaneous catch-all where any attribute that didn?t fit with the others is thrown in. The issue is that it totally lacks consistency in the number and types of miscellaneous attributes included for each business. One business may have a Free Wifi attribute while others may not. After looking through the data it was clear that there wasn?t one attribute in this misc. category that was reliably present for all businesses. Although we have moved on to work with the other attributes, this one still needs work to decide if it should be omitted completely or if default values should be set instead.
+\quad It is still necessary to reduce dimensionality. We?ve currently been working on the whole dataset and simply ignoring all attributes that fall in the category ?other.? This is cumbersome and it will become increasingly detrimental as we use more advanced techniques like clustering. The most prioritized attribute is the attributes portion. This attribute has the most issues because it is a miscellaneous catch-all where any attribute that didn?t fit with the others is thrown in. The issue is that it totally lacks consistency in the number and types of miscellaneous attributes included for each business. One business may have a Free Wifi attribute while others may not. After looking through the data it was clear that there wasn't one attribute in this misc. category that was reliably present for all businesses. Although we have moved on to work with the other attributes, this one still needs work to decide if it should be omitted completely or if default values should be set instead.
 
 \quad In addition, we need to combine the businesses and reviews dataset. This becomes extremely useful when examining the sentiment of a review and finding a correlation with the attributes of a business. This helps us build a model to potentially predict if a business receives negative or positive reviews based on its attributes. 
 
