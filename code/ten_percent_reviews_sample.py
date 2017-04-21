@@ -1,3 +1,11 @@
+"""
+Write a random sample of approximately 10% of the lines in 'infile' to
+'outfile.' Outfile must be initialized before runtime. The below code
+deletes everything in 'outfile' before writing.
+
+Requires: none.
+"""
+
 from time import clock
 import random
 
