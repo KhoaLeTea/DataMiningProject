@@ -19,7 +19,9 @@ def delete_contents(file_name):
 
 delete_contents(outfile)
 with open(infile) as i_f, open(outfile, "a") as o_f:
-
+    
+    businessList = []
+    
     if offset:
         i_f.seek(offset, 0)  # seek from the beginning of the file to offset
 
@@ -32,13 +34,15 @@ with open(infile) as i_f, open(outfile, "a") as o_f:
             name = obj['name']
             city = obj['city']
             state = obj['state']
-            latitude = obj['latitude']
-            longitude = obj['longitude']
+            latitude = float(obj['latitude'])
+            longitude = float(obj['longitude'])
             stars = obj['stars']
+            businessList.append({})
             json.dump({'business_id': business_id, 'name': name,
                        'city': city, 'state': state, 'latitude': latitude,
                        'longitude': longitude, 'stars': stars,
                        'review_count': reviews}, o_f)
+            o_f.write("\n")
             # o_f.write(write_str)
             over_hundred += 1
         if over_hundred > 2:
