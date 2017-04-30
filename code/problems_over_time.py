@@ -4,16 +4,15 @@ python
 import nltk
 nltk.download()
 select appropriate packages on GUI and download
-if no GUI "NLTK Downloader\n---------------\n\td) Download\tl) List...", then
-d vader_lexicon
-d stopwords
-q
 
-*********http://firstmonday.org/ojs/index.php/fm/article/view/4944/3863#p2
+
+*******http://firstmonday.org/ojs/index.php/fm/article/view/4944/3863#p2
 """
 
 # strip fillers, then can graph (scatter) VADER sentiment about business over time
 # stem, then analyze common collocations involving the words "issue", "problem", etc.
+
+# need to normalize issue dist. by # of reviews received for particular period - week; month?
 
 import json
 from time import clock
@@ -63,8 +62,9 @@ undet_issue = ["worst", "terrible", "horrible", "bad", "awful", "mediocre",
                "customer"]
 issue_list = [service_issue, food_issue, price_issue, undet_issue]
 
-dates = []
+dates, rounded_dates = [], []
 service_list, food_list, price_list, undet_list = [], [], [], []
+month_buckets, counts = [], []
 
 
 def main():
@@ -79,11 +79,20 @@ def main():
     path = 'JSON/over_1000_reviews/'
     count = 0
     with open(path + str(os.listdir(path)[1])) as infile:
+
         for line in infile:
             service, food, price, undet = 0, 0, 0, 0
             obj = json.loads(line)
+            d = datetime.datetime.strptime(obj['date'], "%Y-%m-%d")
 
-            if obj['stars'] <= 3:
+            round_d = d.replace(day=1)
+            if round_d not in month_buckets:
+                month_buckets.append(round_d)
+                counts.append(1)
+            else:
+                counts[month_buckets.index(round_d)] += 1
+
+            if obj['stars'] <= 3:  # additional processing
                 count += 1
 
                 text = str_tuple(obj['text'].split())
@@ -107,7 +116,8 @@ def main():
 
                 total_issue_stems = service + food + price + undet
                 if total_issue_stems >= 5:  # threshold exceeded, calculate percentages
-                    dates.append(datetime.datetime.strptime(obj['date'], "%Y-%m-%d"))
+                    dates.append(d)
+
                     service_per = service / float(total_issue_stems)
                     food_per = food / float(total_issue_stems)
                     price_per = price / float(total_issue_stems)
@@ -117,7 +127,6 @@ def main():
                     food_list.append(food_per)
                     price_list.append(price_per)
                     undet_list.append(undet_per)
-
                     # print "service: " + str(service_per)
                     # print "food: " + str(food_per)
                     # print "price: " + str(price_per)
@@ -131,16 +140,18 @@ def main():
 def str_tuple(t, encoding="utf-8"):
     return tuple([i.encode(encoding) for i in t])
 
-
 main()
 
+
 d_sort, s_sort, f_sort, p_sort, u_sort = zip(*sorted(zip(dates, service_list, food_list, price_list, undet_list)))
+rd_sort = sorted(rounded_dates)
 
 print "Processing finished; making scatterplot..."
 trace0 = go.Scatter(x=d_sort, y=s_sort, name='Service Issue')  # mode='markers'
 trace1 = go.Scatter(x=d_sort, y=f_sort, name='Food Issue')  # mode='markers'
 trace2 = go.Scatter(x=d_sort, y=p_sort, name='Price Issue')  # mode='markers'
 trace3 = go.Scatter(x=d_sort, y=u_sort, name='Unresolved Issue')  # mode='markers'
+trace4 = go.Scatter(x=rd_sort, y=s_sort, name='Service Issue Rounded')
 
 data = [trace0, trace1, trace2, trace3]
 layout = go.Layout(
@@ -154,7 +165,23 @@ layout = go.Layout(
         titlefont=dict(size=18)
     )
 )
-
 fig = go.Figure(data=data, layout=layout)
-plotly.offline.plot(fig, filename='issue_distribution.html')
+# plotly.offline.plot(fig, filename='issue_distribution.html')
+
+trace5 = go.Scatter(x=month_buckets, y=counts, name='Review Count', mode='markers')
+data = [trace5]
+layout = go.Layout(
+    title='Count of Reviews by Month',
+    xaxis=dict(
+        title='Month',
+        titlefont=dict(size=18)
+    ),
+    yaxis=dict(
+        title='Count',
+        titlefont=dict(size=18)
+    )
+)
+fig = go.Figure(data=data, layout=layout)
+plotly.offline.plot(fig, filename='month_buckets.html')
+
 print "Done!"
