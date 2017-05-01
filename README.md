@@ -11,11 +11,11 @@ we analyze the sentiment and related statistics of user reviews. We look at how 
 ## Prerequisites:
 Python 2.7 with Pandas, [Plotly](https://plot.ly/python/), [NLTK](http://www.nltk.org/install.html) with vader_lexicon and stopwords. To install NLTK corpora and models from the terminal, type
 
-'''
+```
 python
 import nltk
 nltk.download()
-'''
+```
 
 then choose the necessary materials from the GUI.
 
