@@ -19,6 +19,8 @@ nltk.download()
 
 then choose the necessary materials from the GUI.
 
+[RapidMiner](https://rapidminer.com/), [Jupyter](http://jupyter.org/) or [Anaconda](https://www.continuum.io/downloads) or your preferred method of running .ipynb files also required for running all analyses and files.
+
 ## Questions
 * What are the most common issues in a poorly-reviewed business? Do these issues correlate with any attributes?
   * Answer here
@@ -29,6 +31,6 @@ then choose the necessary materials from the GUI.
   
 ### Applications
 
-[Video Demonstration Link]()
+[Video Demonstration Link](http://www.screencast.com/t/35vgNv7uF)
 
 [Final Paper Link]()
