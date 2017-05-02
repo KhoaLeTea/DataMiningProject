@@ -125,7 +125,7 @@
 
 \quad The script save_reviews_to_business_files.py was used to save all reviews for all businesses in the commonly-reviewed list to separate files, such that each file, named <business_id>.json, contained all the reviews for the business with that business ID. This step was important in building the processing pipeline, but could easily be eliminated now that the pipeline has been developed, so reviews for a certain business could be identified while the script loops through the large review file and then processed without an extra “save” step in between.
 
-\quad Once all reviews for a business were in one file, the script problems_over_time.py was used to analyze the reviews and graph the results. To accomplish this, each review in a <business_id>.json file with a star rating of 3 or fewer stars was tokenized, stemmed, and compared to the following list of words associated with traumatic narratives in Fig.4 on the left:
+\quad Once all reviews for a business were in one file, the script problems_over_time.py was used to analyze the reviews and graph the results. To accomplish this, each review in a <business_id>.json file with a star rating of 3 or fewer stars was tokenized, stemmed, and compared to the following list of words associated with traumatic narratives in Fig. 1 on the left:
 
 \begin{figure}[h]
 \includegraphics[width=0.75\textwidth, center]{table_trauma_keywords}
@@ -137,13 +137,13 @@
 
 \subsection{Basic Statistics and RapidMiner}
 
-\quad After importing the CSV version of the data into RapidMiner, we tested some basic visualization tools included with the package. For instance, in Figure 1 we created a histogram of the average star for a business versus the state in which it is located. Basic graphs like these can help refine our questions. For example, why does Illinois have significantly lower average stars than other states or provinces, even those that border it?
+\quad After importing the CSV version of the data into RapidMiner, we tested some basic visualization tools included with the package. For instance, in Fig. 2 we created a histogram of the average star for a business versus the state in which it is located. Basic graphs like these can help refine our questions. For example, why does Illinois have significantly lower average stars than other states or provinces, even those that border it?
 
 \begin{figure}[h]
 \includegraphics[width=0.75\textwidth, center]{b_rating_by_state}
 \end{figure}
 
-\quad RapidMiner can also produce 3D scatterplots which is useful because we used latitude and longitude in conjunction with the city and state to locate businesses, since some of the business address data is missing and cannot be filled with default values or other common values used to replace missing data. Figure 2 depicts a graph of longitude vs. latitude vs. review count for businesses.
+\quad RapidMiner can also produce 3D scatterplots which is useful because we used latitude and longitude in conjunction with the city and state to locate businesses, since some of the business address data is missing and cannot be filled with default values or other common values used to replace missing data. Fig. 3 depicts a graph of longitude vs. latitude vs. review count for businesses.
 
 \begin{figure}[!h]
 \includegraphics[width=0.75\textwidth, center]{3d_businesses_lat_long}
@@ -157,7 +157,7 @@
 
 \quad Sparse binary data of this kind quickly becomes unwieldy as traditional distance measures are highly prone to error. Such measures include k-means, PCA analysis (for dimensionality reduction), DBSCAN, and agglomerative clustering. Typically, the computational cost is prohibitive (Plumpley, et. al. (2002)) or the numerical values are highly unstable during computation. The goal in our application is to reduce the effective categorical space and classify the businesses into a narrower subset?on the order of ~50. Not surprisingly, this scenario is almost identical to that encountered when processing and analyzing large corpuses of text. Almost every form of textual representation falls into the ?bag-of-words? paradigm where vectors are used to represent each document, and each element corresponds to either the frequency of a given term in the dictionary (i.e., all words from all documents) or the binary existence of the word in the document. Since each document is highly unlikely to have an instance of all terms, the combination of these vectors results in a very large, very sparse matrix of n documents by p terms.
 
-\quad Much research has been done in recent years on Latent Semantic Analysis (or Indexing). This utilizes the fact that a given matrix?s Singular Value Decomposition provides us with a large degree of useful data concerning the nature of the matrix, namely which vectors and rows carry more weight as well as those with less impact. Furthermore, it provides a model through which new data can be projected onto the reduced subspace. The table below shows a sample of the reduced vector space and the first ten terms in each of the new topics.
+\quad Much research has been done in recent years on Latent Semantic Analysis (or Indexing). This utilizes the fact that a given matrix?s Singular Value Decomposition provides us with a large degree of useful data concerning the nature of the matrix, namely which vectors and rows carry more weight as well as those with less impact. Furthermore, it provides a model through which new data can be projected onto the reduced subspace. The table below as Fig. 4 shows a sample of the reduced vector space and the first ten terms in each of the new topics.
 
 \begin{figure}[!h]
 \includegraphics[width=0.75\textwidth, center]{topics}
@@ -187,12 +187,6 @@
 
 \subsection{User Behavior}
 
-\quad The users dataset essentially provides a window into users' status, connections, and interactions within the Yelp ecosystem. The figure below shows a plot of the user density versus the average star rating. We see that the density grows around 3.25-4.25 stars with some traces of a bell curve regarding the number of reviews the user has written.
-
-\begin{figure}[!h]
-\includegraphics[width=0.45\textwidth, center]{u_reviews_vs_stars}
-\end{figure}
-
 \quad Our correlation matrices for the user data showed some insight into the social behavior on Yelp. Our first matrix included each complement type and the average stars a user gave in their reviews (Fig. 8). This matrix showed that there was not a correlation between the number of stars a user would give in their reviews and the compliments they receive. This seems to indicate that users would not be motivated to give a business a better or worse review in order to gain favorability in their profile.
 
 \quad The second matrix (Fig. 9) includes the average stars feature and the total compliments feature. Again, there does not seem to be a relationship between star ratings given and the compliments received.
@@ -207,7 +201,7 @@
 
 \subsection{Tracking Problems}
 
-\quad To answer the question of what types of problems were repeatedly present in a business, we built a utility that analyzes the language found in reviews. As mentioned in the Related Work section, Jurafsky et al. (2014) used a log-odds-ratio informative Dirichlet prior to determine the 50 words most statistically overrepresented in Yelp reviews with one star. We then used the stemmed forms of most of these words (see Fig. 4 in Main Techniques, Natural Language Processing) to determine the “issue distribution” for a particular business during a particular month, two examples of which are below as Fig. 10:
+\quad To answer the question of what types of problems were repeatedly present in a business, we built a utility that analyzes the language found in reviews. As mentioned in the Related Work section, Jurafsky et al. (2014) used a log-odds-ratio informative Dirichlet prior to determine the 50 words most statistically overrepresented in Yelp reviews with one star. We then used the stemmed forms of most of these words (see Fig. 1 in Main Techniques, Natural Language Processing) to determine the “issue distribution” for a particular business during a particular month, two examples of which are below as Fig. 10:
 
 \begin{figure}[h]
 \includegraphics[width=0.75\textwidth, center]{nltk_tracking}
@@ -219,7 +213,7 @@
 
 \quad The decision tree provides insight into the separation of businesses by their category. This can help classify the category of a new business or new areas. For instance, given a new business located at x latitude and y longitude, Yelp can make predictions based on surrounding categories. The tree also reveals the significance of a business being open or permanently closed, and potential declines in certain communities of businesses. Communities that have closing businesses are likely to have surrounding businesses close as well. In terms of businesses, this can help entrepreneurs choose areas that aren’t in decline when starting a new business.
 
-\quad Latitude and longitude are also significant to the category of a business. For businesses this is important because certain categories become abundant in certain areas. One example is that in both New York City and Montreal there are a significant number of creperies because of New York City’s large population density and Montreal’s French influences. New businesses should consider other locations where creperies aren’t as popular. This can provide opportunities for new or existing businesses to venture into new areas. It can also help reveal the niche in certain communities such as in Fig. 4 where certain areas have relatively high concentrations of fitness-related businesses and even martial arts. New businesses can add to concentrations of businesses with an extra twist or bring quality to a category. This quality can be better determined with the k-means clusters.
+\quad Latitude and longitude are also significant to the category of a business. For businesses this is important because certain categories become abundant in certain areas. One example is that in both New York City and Montreal there are a significant number of creperies because of New York City’s large population density and Montreal’s French influences. New businesses should consider other locations where creperies aren’t as popular. This can provide opportunities for new or existing businesses to venture into new areas. It can also help reveal the niche in certain communities such as in Fig. 5 where certain areas have relatively high concentrations of fitness-related businesses and even martial arts. New businesses can add to concentrations of businesses with an extra twist or bring quality to a category. This quality can be better determined with the k-means clusters.
 
 \quad The clusters determined by k-means portray where Yelp is more impactful to a business. West coast areas receive more reviews on average. This can be helpful for businesses to measure their performance. Businesses that want to receive more feedback may consider the clusters that have higher review counts. It also reveals a more active community of Yelp which could be better business. There may be more competition in this clusters, but success can result in exponential growth in an active Yelp community.
 
